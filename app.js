@@ -24,12 +24,28 @@ const normalizar = (input) => {
 };
 
 //----------------------- Renderizar comentarios -----------------------//
+
 const renderizarComentarios = (lista) => {
-    areaComentarios.innerHTML = "";
-    lista.forEach((comentario) => {
-      areaComentarios.innerHTML += `<p>${comentario}</p>`;
-    });
-  }; 
+  areaComentarios.innerHTML = "";
+  lista.forEach((comentario) => {
+    areaComentarios.innerHTML += `<p>${comentario}</p>`;
+  });
+};
+
+//----------------------- Guardar comentarios -----------------------//
+
+let guardarComentarios = (lista) => {
+  let datos = JSON.stringify(lista);
+  localStorage.setItem("comentarios-app", datos);
+};
+
+//----------------------- Leer en el local storage comentarios -----------------------//
+
+let leerComentarios = (lista) => {
+  JSON.parse(localStorage.getItem("comentarios-app"));
+};
+leerComentarios();
+renderizarComentarios(comentarios);
 
 //----------------------- Captar el evento del formulario -----------------------//
 
@@ -43,10 +59,7 @@ formulario.addEventListener("submit", (e) => {
     comentarios.unshift(comentario);
     inputComentario.value = "";
     renderizarComentarios(comentarios);
+    guardarComentarios(comentarios);
   }
   console.log(comentarios);
 });
-
-
-//----------------------- Guardar comentarios -----------------------//
-//----------------------- Leer en el local storage comentarios -----------------------//
