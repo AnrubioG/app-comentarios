@@ -23,12 +23,21 @@ const normalizar = (input) => {
   return input.value.trim();
 };
 
+function eliminarComentario(comentario){
+  comentarios = comentarios.filter((c)=> c !== comentario)
+  renderizarComentarios(comentarios)
+  guardarComentarios(comentarios)
+}
+
 //----------------------- Renderizar comentarios -----------------------//
 
 const renderizarComentarios = (lista) => {
   areaComentarios.innerHTML = "";
   lista.forEach((comentario) => {
-    areaComentarios.innerHTML += `<p>${comentario}</p>`;
+    areaComentarios.innerHTML += `<div class="eliminar">
+      <p>${comentario}</p>
+      <button onclick="eliminarComentario('${comentario}')"> X </button>
+    </div>`;
   });
 };
 
@@ -41,8 +50,8 @@ let guardarComentarios = (lista) => {
 
 //----------------------- Leer en el local storage comentarios -----------------------//
 
-let leerComentarios = (lista) => {
-  JSON.parse(localStorage.getItem("comentarios-app"));
+let leerComentarios = () => {
+  comentarios = JSON.parse(localStorage.getItem("comentarios-app"));
 };
 leerComentarios();
 renderizarComentarios(comentarios);
@@ -53,9 +62,9 @@ formulario.addEventListener("submit", (e) => {
   e.preventDefault();
   let comentario = normalizar(inputComentario);
   if (comentario === "") {
-    // inputComentario.classList.toggle("error");
-    alert("Ingresa un comentario");
+    inputComentario.classList.add("error");
   } else {
+    inputComentario.classList.remove("error");
     comentarios.unshift(comentario);
     inputComentario.value = "";
     renderizarComentarios(comentarios);
