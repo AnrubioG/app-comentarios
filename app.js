@@ -51,7 +51,7 @@ let guardarComentarios = (lista) => {
 //----------------------- Leer en el local storage comentarios -----------------------//
 
 let leerComentarios = () => {
-  comentarios = JSON.parse(localStorage.getItem("comentarios-app"));
+  comentarios = JSON.parse(localStorage.getItem("comentarios-app")) ?? [];
 };
 leerComentarios();
 renderizarComentarios(comentarios);
